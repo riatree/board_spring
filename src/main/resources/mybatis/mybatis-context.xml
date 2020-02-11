@@ -4,9 +4,11 @@
         <typeAliases>
 			<typeAlias alias="User" type="com.scriptwhale.board.vo.User"/>
             <typeAlias alias="Board" type="com.scriptwhale.board.vo.Board"/>
-        </typeAliases> 
+            <typeAlias alias="Comment" type="com.scriptwhale.board.vo.Comment"/>
+        </typeAliases>
         <mappers>
             <mapper resource="mybatis/mappers/users.xml"/>
             <mapper resource="mybatis/mappers/board.xml"/>
+            <mapper resource="mybatis/mappers/comments.xml"/>
         </mappers>
 </configuration>

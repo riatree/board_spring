@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="comments">
+    <select id="selectList" resultType="Comment" parameterType="int">
+        SELECT c.idx, c.contents, c.regdate, u.name, c.user_no, c.board_no
+        FROM comments c, users u, board b
+        WHERE c.board_no = b.idx
+        AND c.user_no = u.idx
+        AND c.status = 'A'
+        AND c.board_no = #{no}
+    </select>
+
+    <select id="selectCount" parameterType="int" resultType="int">
+        SELECT COUNT(*)
+        FROM comments
+        WHERE board_no = #{no}
+    </select>
+
+    <insert id="insert" parameterType="Comment">
+        INSERT INTO comments(contents, user_no, board_no, regdate, status)
+        VALUES (#{contents}, #{userNo}, #{boardNo}, NOW(),'A')
+    </insert>
+
+    <update id="delect" parameterType="int">
+        UPDATE comments SET status = 'D' WHERE idx = #{CommentNo}
+    </update>
+</mapper>

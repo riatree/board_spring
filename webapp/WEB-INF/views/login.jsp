@@ -95,7 +95,7 @@
                 <ul class="info-container">
                     <li class="user-info"><a href="#">아이디 찾기</a></li>
                     <li class="user-info"><a href="#">비밀번호 찾기</a></li>
-                    <li class="user-info"><a href="#">회원가입</a></li>
+                    <li class="user-info"><a href="/join">회원가입</a></li>
                 </ul>
             </div>
         </form>

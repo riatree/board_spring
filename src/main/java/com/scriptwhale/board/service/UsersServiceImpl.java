@@ -16,4 +16,11 @@ public class UsersServiceImpl implements UsersService{
     public User login(User user) {
         return usersDAO.selectLogin(user);
     }
+
+    @Override
+    public int insert(User user) {
+        return usersDAO.insert(user);
+    }
+
+
 } // UsersServiceImpl end

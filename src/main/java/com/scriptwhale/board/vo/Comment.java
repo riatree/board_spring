@@ -2,9 +2,9 @@ package com.scriptwhale.board.vo;
 
 import java.sql.Timestamp;
 
-public class Board {
-    private int idx, userNo, views;
-    private String title, contents, name;
+public class Comment {
+    private int idx, userNo, boardNo;
+    private String contents, name, status;
     private Timestamp regdate;
 
     public int getIdx() {
@@ -23,20 +23,12 @@ public class Board {
         this.userNo = userNo;
     }
 
-    public int getViews() {
-        return views;
+    public int getBoardNo() {
+        return boardNo;
     }
 
-    public void setViews(int views) {
-        this.views = views;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
+    public void setBoardNo(int boardNo) {
+        this.boardNo = boardNo;
     }
 
     public String getContents() {
@@ -55,6 +47,14 @@ public class Board {
         this.name = name;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public Timestamp getRegdate() {
         return regdate;
     }
@@ -62,4 +62,4 @@ public class Board {
     public void setRegdate(Timestamp regdate) {
         this.regdate = regdate;
     }
-} // Board end
+} //Comment end

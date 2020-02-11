@@ -77,20 +77,20 @@
                     <h2>회원가입</h2>
                 </li>
                 <li class="row">
-                    <label class="hidden" for="id">아이디</label>
-                    <input class="user-input" type="text" name="id" id="id" autocomplete="off"/>
+                    <label for="id">아이디</label>
+                    <input class="user-input" type="text" name="id" id="id" placeholder="아이디를 입력해주세요." autocomplete="off"/>
                 </li>
                 <li class="row">
-                    <label class="hidden" for="password">비밀번호</label>
-                    <input class="user-input" type="password" name="password" id="password"/>
+                    <label for="password">비밀번호</label>
+                    <input class="user-input" type="password" name="password" id="password" placeholder="비밀번호를 입력해주세요."/>
                 </li>
                 <li class="row">
-                    <label class="hidden" for="passwordCheck">비밀번호 확인</label>
-                    <input class="user-input" type="password" id="passwordCheck"/>
+                    <label for="passwordCheck">비밀번호 확인</label>
+                    <input class="user-input" type="password" id="passwordCheck" placeholder="비밀번호를 확인합니다."/>
                 </li>
                 <li class="row">
-                    <label class="hidden" for="name">닉네임</label>
-                    <input class="user-input" type="text" name="name" id="name"/>
+                    <label for="name">닉네임</label>
+                    <input class="user-input" type="text" name="name" id="name" placeholder="닉네임을 입력해주세요."/>
                 </li>
                 <li class="row">
                     <input class="login-btn" type="submit" value="회원가입"/>

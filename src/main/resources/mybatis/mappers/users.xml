@@ -6,4 +6,9 @@
 		FROM users
 		WHERE id = #{id} AND password = #{password}
 	</select>
+
+	<insert id="insert" parameterType="User">
+		INSERT INTO users(id, password, name, regdate)
+		VALUES (#{id}, #{password}, #{name}, NOW())
+	</insert>
 </mapper>

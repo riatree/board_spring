@@ -35,4 +35,15 @@ public class UserController {
         return "redirect:"+referer;
     } // logout() end
 
+    @RequestMapping(value = "/join", method = RequestMethod.GET)
+    public String userJoin() {
+        return "join";
+    } // joinForm() end
+
+    @RequestMapping(value = "/join", method = RequestMethod.POST)
+    public String registerUser(User user) {
+        usersService.insert(user);
+        return "/login";
+    }
+
 } //UserController end

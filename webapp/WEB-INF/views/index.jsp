@@ -17,6 +17,7 @@
     }
     a {
         text-decoration: none;
+        color : #424242;
     }
 
     .header-container {
@@ -45,6 +46,10 @@
         right: 50px;
     }
 
+    .contents{
+        border-bottom: 1px solid #424242;
+    }
+
     .hidden {
         display: none;
         overflow: hidden;
@@ -54,12 +59,37 @@
 <body>
 <c:import url="/WEB-INF/template/header.jsp"/>
 <main class="main-container">
-    <ul class="view-container">
-        <li class="contents-container">
-            <h3>title</h3>
+    <div class="info-container">
 
-        </li><!--//contents-container-->
-    </ul> <!-- //view-container-->
+    </div>
+    <div class="view-container">
+        <c:choose>
+            <c:when test="${loginUser!=null}">
+                <a href="/post">글쓰기</a>
+            </c:when>
+        </c:choose>
+        <ul class="contents-container">
+            <c:forEach items="${ boardList}" var="post">
+                <li class="contents">
+                    <a href="/post/${post.idx}">
+                    <dl>
+                        <dt class="hidden">작성유저</dt>
+                        <dd>
+                            <p>${ post.name}</p>
+                            <p>${ post.regdate}</p>
+                            <p>${ post.views}</p>
+                        </dd>
+                        <dt class="hidden">작성글</dt>
+                        <dd>
+                            <p>${post.title}</p>
+                        </dd>
+                    </dl>
+                    </a>
+                </li>
+            </c:forEach>
+        </ul> <!-- //view-container-->
+    </div>
+
 </main> <!-- //main-container -->
 <footer class="footer-container"></footer>
 <script src="/js/jquery-3.3.1.min.js"></script>

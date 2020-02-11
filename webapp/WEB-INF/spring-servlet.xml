@@ -32,5 +32,6 @@
 	<!-- Service Bean -->
 	<bean id="usersService" class="com.scriptwhale.board.service.UsersServiceImpl"/>
 	<bean id="boardService" class="com.scriptwhale.board.service.BoardServiceImpl"/>
+	<bean id="commentsService" class="com.scriptwhale.board.service.CommentsServiceImpl"/>
 
 </beans>
