@@ -1,6 +1,7 @@
 package com.scriptwhale.board.repository;
 
 import com.scriptwhale.board.vo.Comment;
+import com.scriptwhale.board.vo.Page;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -15,13 +16,18 @@ public class CommentsDAOImpl implements CommentsDAO {
 
 
     @Override
-    public List<Comment> commentList(int no) {
-        return sqlSession.selectList("comments.selectList", no);
+    public List<Comment> selectList(Page page) {
+        return sqlSession.selectList("comments.selectList", page);
     }
 
     @Override
-    public int commentCount(int no) {
-        return sqlSession.selectOne("comments.selectCount", no);
+    public int selectTotal(int boardNo) {
+        return sqlSession.selectOne("comments.selectTotal", boardNo);
+    }
+
+    @Override
+    public int insert(Comment comment) {
+        return sqlSession.insert("comments.insert", comment);
     }
 
 

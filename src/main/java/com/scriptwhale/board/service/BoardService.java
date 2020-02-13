@@ -3,14 +3,15 @@ package com.scriptwhale.board.service;
 import com.scriptwhale.board.vo.Board;
 import com.scriptwhale.board.vo.Comment;
 
-import java.util.List;
+import java.util.Map;
 
 public interface BoardService {
-    public List<Board> selectList();
+    public Map<String, Object> getList(int pageNo);
+
     public Board selectPost(int no);
     public int insertPost(Board board);
 
     /* 댓글 부분 */
-    public List<Comment> commentList(int no);
-    public int commentCount(int no);
+    public Map<String, Object> getCommentList(int boardNo, int pageNo);
+    public boolean register(Comment comment);
 } //BoardService end

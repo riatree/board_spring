@@ -11,9 +11,10 @@
     html, body {
         padding: 0; margin: 0;
     }
-    ul {
+    ul, dl, dd, li{
         list-style: none;
         margin: 0;
+        padding: 0;
     }
     a {
         text-decoration: none;
@@ -46,6 +47,23 @@
         right: 50px;
     }
 
+    .contents-container{
+        width: 80%;
+        margin: 30px auto 10px auto;
+    }
+
+    #paginateBox {
+        width: 20%;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    #paginateBox a {
+        font-size: 1em;
+        width: 10px; height: 10px;
+        background-color: #6BACD0;
+    }
+
     .contents{
         border-bottom: 1px solid #424242;
     }
@@ -68,34 +86,77 @@
                 <a href="/post">글쓰기</a>
             </c:when>
         </c:choose>
-        <ul class="contents-container">
-            <c:forEach items="${ boardList}" var="post">
+
+        <script type="text/template" id="postTmp">
+            <@ _.each(posts,function(post){ @>
                 <li class="contents">
-                    <a href="/post/${post.idx}">
-                    <dl>
-                        <dt class="hidden">작성유저</dt>
-                        <dd>
-                            <p>${ post.name}</p>
-                            <p>${ post.regdate}</p>
-                            <p>${ post.views}</p>
-                        </dd>
-                        <dt class="hidden">작성글</dt>
-                        <dd>
-                            <p>${post.title}</p>
-                        </dd>
-                    </dl>
+                    <a href="/post/<@=post.idx@>">
+                        <dl>
+                            <dt class="hidden">작성유저</dt>
+                            <dd>
+                                <p><@=post.name@></p>
+                                <p><@=post.regdate @></p>
+                            </dd>
+                            <dt class="hidden">작성글</dt>
+                            <dd>
+                                <p><@=post.title@></p>
+                            </dd>
+                        </dl>
                     </a>
                 </li>
-            </c:forEach>
-        </ul> <!-- //view-container-->
+            <@ })@>
+        </script>
+
+        <ul class="contents-container"></ul> <!-- //view-container-->
+
+        <div id="paginateBox"></div>
     </div>
 
 </main> <!-- //main-container -->
 <footer class="footer-container"></footer>
 <script src="/js/jquery-3.3.1.min.js"></script>
+<script src="/js/underscore-min.js"></script>
 <script>
     let $userInfo = $('.userInfo-Container'),
-        $user_name = $('.user-name');
+        $user_name = $('.user-name'),
+        $contentContainer = $('.contents-container');
+
+    //jsp에서 언더스코어를 활용하기 위해서
+    //% -> @ 로 사용
+    _.templateSettings = {
+        interpolate: /\<\@\=(.+?)\@\>/gim,
+        evaluate: /\<\@([\s\S]+?)\@\>/gim,
+        escape: /\<\@\-(.+?)\@\>/gim
+    };
+
+    let tmp = _.template($("#postTmp").html()),
+        pageNo = 1;
+
+    function getList() {
+        $contentContainer.children().remove();
+        $.ajax({
+            url : "/ajax/post/list/"+pageNo,
+            type : "get",
+            dataType : "json",
+            error : function (request, status, error) {
+                alert(request + status + error);
+            },
+            success : function (json) {
+                $contentContainer.append(tmp({"posts":json.list}));
+                $("#paginateBox").html(json.paginate);
+            }
+        })
+    } //getList() end
+
+    getList();
+
+
+    $("#paginateBox").on("click",".paginate a",function(e) {
+        e.preventDefault();
+        var href = $(this).attr("href");
+        pageNo = href.substring(href.lastIndexOf("/")+1, href.length);
+        getList();
+    });
 
     $user_name.on('click', function () {
         $userInfo.toggleClass('hidden');

@@ -36,5 +36,8 @@
         <constructor-arg index="0" ref="sqlSessionFactory" />
 	</bean>
 	
-	
+
+	<!-- Util Beans 설정 -->
+	<bean id="paginateUtil" class="com.scriptwhale.board.util.PaginateUtil"/>
+
 </beans>

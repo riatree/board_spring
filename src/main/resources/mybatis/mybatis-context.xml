@@ -5,6 +5,7 @@
 			<typeAlias alias="User" type="com.scriptwhale.board.vo.User"/>
             <typeAlias alias="Board" type="com.scriptwhale.board.vo.Board"/>
             <typeAlias alias="Comment" type="com.scriptwhale.board.vo.Comment"/>
+            <typeAlias alias="Page" type="com.scriptwhale.board.vo.Page"/>
         </typeAliases>
         <mappers>
             <mapper resource="mybatis/mappers/users.xml"/>

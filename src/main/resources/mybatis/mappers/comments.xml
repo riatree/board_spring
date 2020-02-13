@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="comments">
-    <select id="selectList" resultType="Comment" parameterType="int">
-        SELECT c.idx, c.contents, c.regdate, u.name, c.user_no, c.board_no
-        FROM comments c, users u, board b
-        WHERE c.board_no = b.idx
-        AND c.user_no = u.idx
-        AND c.status = 'A'
-        AND c.board_no = #{no}
+    <select id="selectList" resultType="Comment" parameterType="Page">
+        SELECT c.idx idx, c.contents contents, c.user_no userNo, c.board_no, c.regdate, c.status, u.name
+        FROM comments c, users u
+        WHERE c.user_no = u.idx
+        AND status = 'A'
+        AND board_no = #{boardNo}
+        ORDER BY c.regdate DESC
+        LIMIT #{start}, #{end}
     </select>
 
-    <select id="selectCount" parameterType="int" resultType="int">
+    <select id="selectTotal" parameterType="int" resultType="int">
         SELECT COUNT(*)
         FROM comments
-        WHERE board_no = #{no}
+        WHERE status = 'A'
+        AND board_no = #{boardNo}
     </select>
 
     <insert id="insert" parameterType="Comment">

@@ -7,6 +7,16 @@ public class Comment {
     private String contents, name, status;
     private Timestamp regdate;
 
+    public Comment() {
+    }
+
+    public Comment(int userNo, int boardNo, String contents) {
+        super();
+        this.userNo = userNo;
+        this.boardNo = boardNo;
+        this.contents = contents;
+    }
+
     public int getIdx() {
         return idx;
     }
