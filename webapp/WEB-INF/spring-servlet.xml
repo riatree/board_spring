@@ -13,20 +13,25 @@
 
 	<context:annotation-config />
 
-	<context:component-scan
-		base-package="com.scriptwhale.board.controller" />
+	<context:component-scan base-package="com.scriptwhale.board.controller" />
 
 	<mvc:annotation-driven />
 	<mvc:default-servlet-handler />
 
-	<!-- JSTL view -->
+	<mvc:resources location="/images/" mapping="/images/**" />
+	<mvc:resources location="/js/" mapping="/js/**" />
 
+
+
+	<!-- JSTL view -->
 	<bean id='viewResolver' class='org.springframework.web.servlet.view.InternalResourceViewResolver'>
-		<property name="prefix" value='/WEB-INF/views/' />
+		<property name="prefix" value='/WEB-INF/views/'/>
 		<property name="suffix" value='.jsp' />
 	</bean>
 
 	<!-- Service Bean -->
-	<bean id="usersService" class="com.scriptwhale.board.service.UsersServiceImpl" />
+	<bean id="usersService" class="com.scriptwhale.board.service.UsersServiceImpl"/>
+	<bean id="boardService" class="com.scriptwhale.board.service.BoardServiceImpl"/>
+	<bean id="commentsService" class="com.scriptwhale.board.service.CommentsServiceImpl"/>
 
 </beans>

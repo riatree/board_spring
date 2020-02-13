@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="board">
+    <select id="selectList" resultType="Board" parameterType="Page">
+        SELECT b.idx, b.title, b.contents, b.views, b.user_no, b.regdate, u.name
+        FROM board b, users u
+        WHERE b.user_no = u.idx AND b.status = 'A'
+        ORDER BY b.regdate DESC
+        LIMIT #{start}, #{end}
+    </select>
+
+    <select id="selectListTotal" resultType="int">
+        SELECT COUNT(*)
+        FROM board
+        WHERE status = 'A'
+    </select>
+
+    <select id="selectPost" parameterType="int" resultType="Board">
+        SELECT b.idx, b.title, b.regdate, b.contents, b.user_no,b.views, b.status, u.name
+        FROM board b, users u
+        WHERE b.user_no = u.idx AND b.idx = #{no}
+    </select>
+    
+    <update id="increView" parameterType="int">
+        UPDATE board SET views = views + 1 WHERE idx = #{no}
+    </update>
+
+    <insert id="insert" parameterType="Board">
+        INSERT INTO board(title, contents, user_no, views, regdate, status)
+        VALUES (#{title}, #{contents}, #{userNo}, 0, NOW(), 'A')
+    </insert>
+</mapper>
