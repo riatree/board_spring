@@ -7,42 +7,18 @@
         html, body {
             padding: 0; margin: 0;
         }
-        ul, dl, dd {
+        ul, dl, dd, li{
             list-style: none;
             margin: 0;
             padding: 0;
         }
         a {
             text-decoration: none;
+            color : #424242;
         }
 
-        .header-container {
-            width: 100%; height: 50px;
-            box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-        }
 
-        .menu-container {
-            width: 100%; height: 50px;
-            padding: 0;
-            position: relative;
-        }
 
-        .menu-list {
-            width: 100px; height: 100%;
-            float: left;
-            text-align: center;
-        }
-
-        .logo-img {
-            width: 100%; height: 100%;
-            margin-left: 50px;
-        }
-
-        .login-btn {
-            line-height: 50px;
-            position: absolute;
-            right: 30px;
-        }
         .hidden {
             display: none;
             overflow: hidden;
@@ -55,6 +31,7 @@
         .post-container {
             width: 70%;
             margin: 30px auto;
+            box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.16);
         }
 
         .writer-container {
@@ -98,7 +75,12 @@
             font-size: 0.9em;
         }
 
-
+        .post-box>pre {
+            width: 90%;
+            background: #a7a7a7;
+            border-radius: 5px;
+            padding: 10px;
+        }
 
         .comment-container {
             width: 70%;
@@ -106,7 +88,8 @@
         }
 
         .comment-box{
-            width: 90%; height: 100px;
+            width: 94%;
+            padding: 3px;
             margin: 10px;
             box-shadow: 0 2px 2px 0 rgba(0,0,0,.5);
         }
@@ -138,17 +121,19 @@
         }
 
         .comment-area {
-            width: 90%;
+            width: 94%;
             height: 100px;
             font-size: 1.1em;
             color: #a7a7a7;
-            margin: 0 10px;
+            margin: 10px 10px;
             padding: 25px;
             resize: none; border: none;
             box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            white-space:pre-line
         }
         .btn-box {
-            width: 100%;
+            width: 94%;
+            position: relative;
         }
 
 
@@ -159,6 +144,8 @@
             background-color: #6BACD0;
             color: #fff;
             cursor: pointer;
+            position: absolute;
+            right: 0;
         }
     </style>
 </head>
@@ -180,7 +167,6 @@
         </div>
     </div> <%-- //post-container --%>
 
-
     <div class="comment-container">
         <div>
             <p><span class="comment-count">0</span> Comments</p>
@@ -198,18 +184,21 @@
                     <dl>
                         <dt class="hidden">작성자 상자</dt>
                         <dd>
-                            <input type="hidden" class="commentIdx" value="<@=comment.idx @>"/>
                             <span class="comment-username comment sub"><@=comment.name @></span>
                             <span class="comment-regdate comment sub"><@=comment.regdate @></span>
                         </dd>
                         <dt class="hidden">내용상자</dt>
                         <dd class="content-box">
+
                             <p class="comment-contents">
                                 <@=comment.contents @>
                                 <@ if (loginNo == comment.userNo) { @>
-                                    <ul class="comment-btn hidden">
-                                        <li><button>수정</button></li>
-                                        <li><button class="delete-btn" type="button">삭제</button></li>
+                                    <ul class="comment-btn">
+                                        <li>
+                                            <input type="hidden" class="comment-idx" value="<@=comment.idx @>"/>
+                                            <button class="hidden">수정</button>
+                                            <button class="delete-btn" type="button">삭제</button>
+                                        </li>
                                     </ul>
                                 <@ } @>
                             </p>
@@ -234,6 +223,7 @@
 <footer class="footer-container"></footer>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>
+<script src="/eager/js/board_login_js.js"></script>
 <script>
     _.templateSettings = {
         interpolate: /\<\@\=(.+?)\@\>/gim,
@@ -255,7 +245,7 @@
     function getCommentList() {
         $commentList.children().remove();
         $.ajax({
-            url:"/ajax/post/" + boardNo + "/page/" + pageNo,
+            url:"/eager/ajax/post/" + boardNo + "/page/" + pageNo,
             type: "get",
             dataType: "json",
             error:function(request, status, error) {
@@ -271,13 +261,13 @@
 
     function insertComment() {
         $.ajax({
-            url: "/ajax/post/comment",
+            url: "/eager/ajax/post/comment",
             type:"post",
             dataType:"json",
             data:{
                 "userNo" : userNo,
                 "boardNo" : boardNo,
-                "contents" : $commentArea.val()
+                "contents" : $commentArea.val().replace(/(?:\r\n|\r|\n)/g, '<br />')
             },
             error:function (request, status, error) {
                 alert(request + status + error);
@@ -285,6 +275,7 @@
             success:function (json) {
                 if(json.result) {
                     getCommentList();
+                    $commentArea.val("");
                 } else {
                     alert("다시 시도해주세요.");
                 }
@@ -292,19 +283,41 @@
         });
     } // insertComment() end
 
-    function delectComment() {
-        var no = $(".commentIdx").html();
-        console.log(no);
+    let commentNum;
+
+    function delectComment(commentNum) {
+        $.ajax({
+            url : "/eager/ajax/post/comment/delete",
+            type: "post",
+            dataType : "json",
+            data: {"commentNo" : commentNum },
+            error:function (request, status, error) {
+                alert(request + status + error);
+            },
+            success:function (json) {
+                if(json.result) {
+                    getCommentList();
+                } else {
+                    alert("서버에 문제가 발생하였습니다. 다시 시도해주세요.");
+                }
+            }
+
+        })
     }
 
     $commentList.on("click", ".delete-btn",function () {
-        delectComment();
+        commentNum = $(this).parent().find('input').val();
+        var flag = confirm("댓글을 삭제 하시겠습니까?");
+        if(flag) {
+            delectComment(commentNum);
+        }
     });
 
     $insertBtn.on('click', function () {
         if (${loginUser!=null}) {
             if($commentArea.val().length > 0) {
                 insertComment();
+
             } else {
                 alert("값을 입력해주세요.");
             }
@@ -313,20 +326,23 @@
         }
     });
 
-</script>
-<script>
-    let $userInfo = $('.userInfo-Container'),
-        $user_name = $('.user-name');
 
-    $user_name.on('click', function () {
-        $userInfo.toggleClass('hidden');
-        return false;
-    });
+    $commentArea.on('keydown', function (e) {
+            if(e.keyCode==13) {
+                if(!e.shiftKey) {
+                    if (${loginUser!=null}) {
+                        if($commentArea.val().length > 0) {
+                            insertComment();
 
-    let $commentBox = $('.comment-box');
+                        } else {
+                            alert("값을 입력해주세요.");
+                        }
+                    } else {
+                        alert("로그인 해주세요.");
+                    }
+                }
+            }
 
-    $commentBox.on('mouseover', function () {
-        $('.comment-btn').toggleClass('hidden');
     });
 
 </script>

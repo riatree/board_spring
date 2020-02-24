@@ -73,5 +73,10 @@ public class BoardServiceImpl implements BoardService{
         return 1 == commentsDAO.insert(comment);
     }
 
+    @Override
+    public boolean removeComment(int commentNo) {
+        return 1 == commentsDAO.delect(commentNo);
+    }
+
 
 } //BoardServiceImpl end

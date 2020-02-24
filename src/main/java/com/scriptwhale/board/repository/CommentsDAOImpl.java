@@ -26,6 +26,11 @@ public class CommentsDAOImpl implements CommentsDAO {
     }
 
     @Override
+    public int delect(int commentNo) {
+        return sqlSession.update("comments.delect", commentNo);
+    }
+
+    @Override
     public int insert(Comment comment) {
         return sqlSession.insert("comments.insert", comment);
     }

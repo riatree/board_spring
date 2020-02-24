@@ -24,6 +24,6 @@
     </insert>
 
     <update id="delect" parameterType="int">
-        UPDATE comments SET status = 'D' WHERE idx = #{CommentNo}
+        UPDATE comments SET status = 'D' WHERE idx = #{commentNo}
     </update>
 </mapper>

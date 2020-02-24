@@ -49,4 +49,11 @@ public class BoardController {
         return boardService.getCommentList(boardNo, pageNo);
     }
 
+    @RequestMapping(value = "/ajax/post/comment/delete", method = RequestMethod.POST, produces = "application/json;charset=UTF-8" )
+    @ResponseBody
+    public String removeComment(int commentNo){
+        boolean flag = boardService.removeComment(commentNo);
+        return "{\"result\" : " + flag + "}";
+    }
+
 } // BoardController end

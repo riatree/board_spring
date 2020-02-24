@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>고래보드 : 회원가입</title>
-    <link rel="shortcut icon" href="/images/favicon/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="/eager/images/favicon/favicon.ico" type="image/x-icon">
     <style>
         html, body {
             margin: 0; padding: 0; border: 0;
@@ -71,7 +71,7 @@
     <header class="header-container"></header>
     <main class="main-container" oncontextmenu="return false" ondragstart="return false" onselect="return false">
         <h2 class="hidden">고래보드 회원가입 페이지</h2>
-        <form class="form-container" action="/join" method="POST">
+        <form class="form-container" action="/eager/join" method="POST">
             <ul class="login-container">
                 <li class="row login-title">
                     <h2>회원가입</h2>

@@ -9,7 +9,7 @@ public interface CommentsDAO {
 
     public List<Comment> selectList(Page page);
     public int selectTotal(int boardNo);
-
+    public int delect(int commentNo);
 
     public int insert(Comment comment);
 

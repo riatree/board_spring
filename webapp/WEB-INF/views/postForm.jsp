@@ -63,12 +63,18 @@
         }
 
 
+        .note-editable.card-block>pre{
+            background: #a7a7a7;
+            border-radius: 5px;
+            padding: 10px;
+        }
+
     </style>
 </head>
 <body>
     <c:import url="/WEB-INF/template/header.jsp"/>
     <main class="main-container">
-        <form class="post-container" action="/post" method="POST">
+        <form class="post-container" action="/eager/post" method="POST">
             <input type="hidden" name="userNo" value="${loginUser.idx}">
             <input class="post-title" placeholder="제목을 입력하세요." name="title"/>
             <div id="summernote"></div>

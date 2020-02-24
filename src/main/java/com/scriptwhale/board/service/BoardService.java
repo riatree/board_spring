@@ -14,4 +14,5 @@ public interface BoardService {
     /* 댓글 부분 */
     public Map<String, Object> getCommentList(int boardNo, int pageNo);
     public boolean register(Comment comment);
+    public boolean removeComment(int commentNo);
 } //BoardService end

@@ -7,7 +7,7 @@
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
       <jdbc-url>jdbc:mysql://localhost:3306</jdbc-url>
     </data-source>
-    <data-source source="LOCAL" name="@localhost" uuid="d98940ed-48f9-4910-a379-8e8391c492c2">
+    <data-source source="LOCAL" name="@localhost" uuid="bb26f8d4-46fe-4883-9941-31659da7f147">
       <driver-ref>oracle</driver-ref>
       <synchronize>true</synchronize>
       <auto-commit>false</auto-commit>

@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
     <title>고래보드</title>
-    <link rel="shortcut icon" href="/images/favicon/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="/eager/images/favicon/favicon.ico" type="image/x-icon">
 </head>
 <style>
     html, body {
@@ -21,47 +21,51 @@
         color : #424242;
     }
 
-    .header-container {
-        width: 100%; height: 50px;
-        box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    .view-container {
+        width: 80%;
+        margin: 0 auto;
     }
 
-    .menu-container {
-        width: 100%; height: 50px;
+    .info-container {
+        width: 100%; height: 100px;
+    }
+
+    .btn-box {
+        margin-top: 15px;
+        width: 100%; height: 30px;
         position: relative;
     }
 
-    .menu-list {
-        width: 100px; height: 100%;
-        float: left;
-        text-align: center;
-    }
-
-    .logo-img {
-        width: 100%; height: 100%;
-    }
-
-    .login-btn {
-        line-height: 50px;
+    .btn-box>a {
+        width: 80px; height: 30px;
+        display: inline-block;
         position: absolute;
-        right: 50px;
+        right: 0;
+        background-color: #6BACD0;
+        color: #fff;
+        border-radius: 18px;
+        text-align: center; line-height: 30px;
     }
 
     .contents-container{
-        width: 80%;
-        margin: 30px auto 10px auto;
     }
 
     #paginateBox {
-        width: 20%;
-        margin: 0 auto;
+        width: 20%; height: 50px;
+        margin: 10px auto;
         text-align: center;
     }
 
-    #paginateBox a {
+    .paginate{
+        width: 100%;
+        height: 100%;
+        line-height: 50px;
+    }
+
+    #paginateBox a ,  #paginateBox strong {
         font-size: 1em;
-        width: 10px; height: 10px;
-        background-color: #6BACD0;
+        width: 20px;
+        display: inline-block;
     }
 
     .contents{
@@ -77,20 +81,23 @@
 <body>
 <c:import url="/WEB-INF/template/header.jsp"/>
 <main class="main-container">
-    <div class="info-container">
 
-    </div>
     <div class="view-container">
+        <div class="info-container">
+
+        </div>
         <c:choose>
             <c:when test="${loginUser!=null}">
-                <a href="/post">글쓰기</a>
+                <div class="btn-box">
+                    <a href="/eager/post">글쓰기</a>
+                </div>
             </c:when>
         </c:choose>
 
         <script type="text/template" id="postTmp">
             <@ _.each(posts,function(post){ @>
                 <li class="contents">
-                    <a href="/post/<@=post.idx@>">
+                    <a href="/eager/post/<@=post.idx@>">
                         <dl>
                             <dt class="hidden">작성유저</dt>
                             <dd>
@@ -114,12 +121,11 @@
 
 </main> <!-- //main-container -->
 <footer class="footer-container"></footer>
-<script src="/js/jquery-3.3.1.min.js"></script>
-<script src="/js/underscore-min.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
+<script src="/eager/js/underscore-min.js"></script>
+<script src="/eager/js/board_login_js.js"></script>
 <script>
-    let $userInfo = $('.userInfo-Container'),
-        $user_name = $('.user-name'),
-        $contentContainer = $('.contents-container');
+    let $contentContainer = $('.contents-container');
 
     //jsp에서 언더스코어를 활용하기 위해서
     //% -> @ 로 사용
@@ -135,7 +141,7 @@
     function getList() {
         $contentContainer.children().remove();
         $.ajax({
-            url : "/ajax/post/list/"+pageNo,
+            url : "ajax/post/list/"+pageNo,
             type : "get",
             dataType : "json",
             error : function (request, status, error) {
@@ -158,10 +164,7 @@
         getList();
     });
 
-    $user_name.on('click', function () {
-        $userInfo.toggleClass('hidden');
-        return false;
-    });
+
 
 </script>
 </body>
