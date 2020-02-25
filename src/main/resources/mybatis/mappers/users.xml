@@ -7,6 +7,18 @@
 		WHERE id = #{id} AND password = #{password}
 	</select>
 
+	<select id="selectCheckId" resultType="int" parameterType="String">
+		SELECT COUNT(*)
+		FROM users
+		WHERE id = #{id}
+	</select>
+
+	<select id="selectCheckName" resultType="int" parameterType="String">
+		SELECT COUNT(*)
+		FROM users
+		WHERE name = #{name}
+	</select>
+
 	<insert id="insert" parameterType="User">
 		INSERT INTO users(id, password, name, regdate)
 		VALUES (#{id}, #{password}, #{name}, NOW())

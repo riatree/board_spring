@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 
@@ -25,7 +26,11 @@ public class UserController {
     @RequestMapping(value="/session", method=RequestMethod.POST)
     public String login(User user, HttpSession session, @RequestHeader String referer) {
         session.setAttribute("loginUser", usersService.login(user));
-        return "redirect:/";
+        if(usersService.login(user) != null) {
+            return "redirect:/";
+        } else {
+            return "login";
+        }
         // return "redirect:"+referer;
     } //login() end
 
@@ -44,6 +49,18 @@ public class UserController {
     public String registerUser(User user) {
         usersService.insert(user);
         return "/login";
+    }
+
+    @RequestMapping(value = "/ajax/user/check/id", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String checkId(String id) {
+        return "{\"count\":" + usersService.checkId(id) + "}";
+    }
+
+    @RequestMapping(value = "/ajax/user/check/name", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String checkName(String name) {
+        return "{\"count\":" + usersService.checkName(name) + "}";
     }
 
 } //UserController end

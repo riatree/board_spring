@@ -16,7 +16,7 @@
     </select>
 
     <select id="selectPost" parameterType="int" resultType="Board">
-        SELECT b.idx, b.title, b.regdate, b.contents, b.user_no,b.views, b.status, u.name
+        SELECT b.idx idx, b.title, b.regdate, b.contents, b.user_no userNo, b.views, b.status, u.name
         FROM board b, users u
         WHERE b.user_no = u.idx AND b.idx = #{no}
     </select>
@@ -29,4 +29,9 @@
         INSERT INTO board(title, contents, user_no, views, regdate, status)
         VALUES (#{title}, #{contents}, #{userNo}, 0, NOW(), 'A')
     </insert>
+
+    <update id="delectPost" parameterType="int">
+        UPDATE board SET status = 'D' WHERE idx = #{no}
+    </update>
+
 </mapper>

@@ -3,6 +3,7 @@
 <html>
 <head>
     <title>${post.title} &boxv; ${post.name}</title>
+    <script src="https://kit.fontawesome.com/123608974e.js" crossorigin="anonymous"></script>
     <style>
         html, body {
             padding: 0; margin: 0;
@@ -31,6 +32,7 @@
         .post-container {
             width: 70%;
             margin: 30px auto;
+            padding-bottom: 20px;
             box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.16);
         }
 
@@ -81,6 +83,14 @@
             border-radius: 5px;
             padding: 10px;
         }
+
+        .post-btnBox {
+            width: 150px; height: 30px;
+            box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            border-radius: 100px;
+            margin: 10px 10px;
+        }
+
 
         .comment-container {
             width: 70%;
@@ -153,6 +163,7 @@
 <c:import url="/WEB-INF/template/header.jsp"/>
 <main class="main-container">
     <div class="post-container">
+        <input class="post-num" type="hidden" value="${post.idx}"/>
         <div class="writer-container">
             <ul class="writer-box">
                 <li class="post-title">${post.title}</li>
@@ -164,6 +175,24 @@
         </div>
         <div class="post-box">
             <p class="post-content">${post.contents}</p>
+        </div>
+        <div class="post-btnBox">
+            <ul>
+                <c:choose>
+                    <c:when test="${post.userNo == loginUser.idx}">
+                        <li>
+                            <i class="fas fa-ellipsis-h"></i>
+                            <div class="writer-btn hidden">
+                                <button type="button">수정</button>
+                                <form class="delete-form" action="/eager/post/${post.idx}" method="post">
+                                    <input type="hidden" name="_method" value="PUT">
+                                    <button class="post-delete btn" type=submit>삭제</button>
+                                </form>
+                            </div>
+                        </li>
+                    </c:when>
+                </c:choose>
+            </ul>
         </div>
     </div> <%-- //post-container --%>
 
@@ -185,7 +214,7 @@
                         <dt class="hidden">작성자 상자</dt>
                         <dd>
                             <span class="comment-username comment sub"><@=comment.name @></span>
-                            <span class="comment-regdate comment sub"><@=comment.regdate @></span>
+                            <span class="comment-regdate comment sub"><@=moment(comment.regdate).startOf('day').fromNow() @></span>
                         </dd>
                         <dt class="hidden">내용상자</dt>
                         <dd class="content-box">
@@ -207,10 +236,10 @@
                 </li>
                 <@ }) @>
             </script>
+
         </div>
         <div class="comment-inputbox">
             <input class="user-num" type="hidden" value="${loginUser.idx}"/>
-            <input class="post-num" type="hidden" value="${post.idx}"/>
             <textarea class="comment-area" placeholder="소중한 댓글을 입력해주세요."></textarea>
             <div class="btn-box">
                 <button class="insert-btn">등록</button>
@@ -224,6 +253,8 @@
 <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>
 <script src="/eager/js/board_login_js.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.0/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.0/locale/ko.js"></script>
 <script>
     _.templateSettings = {
         interpolate: /\<\@\=(.+?)\@\>/gim,
@@ -344,6 +375,11 @@
             }
 
     });
+
+    $('.fas.fa-ellipsis-h').on("click", function () {
+        $('.writer-btn').toggleClass("hidden");
+    });
+
 
 </script>
 </body>

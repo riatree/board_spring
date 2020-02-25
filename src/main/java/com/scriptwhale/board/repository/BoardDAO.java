@@ -13,4 +13,5 @@ public interface BoardDAO {
 
     public Board selectPost(int no);
     public int insert(Board board);
+    public int delectPost(int no);
 } //BoardDAO end

@@ -21,5 +21,15 @@ public class UsersDAOImpl implements UsersDAO {
 		return sqlSession.insert("users.insert", user);
 	}
 
+	@Override
+	public int selectCheckId(String id) {
+		return sqlSession.selectOne("users.selectCheckId", id);
+	}
+
+	@Override
+	public int selectCheckName(String name) {
+		return sqlSession.selectOne("users.selectCheckName", name);
+	}
+
 
 } // UsersDAO end

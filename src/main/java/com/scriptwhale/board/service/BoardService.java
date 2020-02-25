@@ -10,6 +10,8 @@ public interface BoardService {
 
     public Board selectPost(int no);
     public int insertPost(Board board);
+    public boolean removePost(int no);
+
 
     /* 댓글 부분 */
     public Map<String, Object> getCommentList(int boardNo, int pageNo);

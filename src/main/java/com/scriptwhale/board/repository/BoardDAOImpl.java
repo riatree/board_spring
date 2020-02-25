@@ -40,5 +40,10 @@ public class BoardDAOImpl implements BoardDAO {
         return sqlSession.insert("board.insert", board);
     }
 
+    @Override
+    public int delectPost(int no) {
+        return sqlSession.delete("board.delectPost", no);
+    }
+
 
 } //BoardDAOImpl end

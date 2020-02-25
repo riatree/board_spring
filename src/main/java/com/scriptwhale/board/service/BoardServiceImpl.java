@@ -52,6 +52,11 @@ public class BoardServiceImpl implements BoardService{
         return boardDAO.insert(board);
     }
 
+    @Override
+    public boolean removePost(int no) {
+        return 1 == boardDAO.delectPost(no);
+    }
+
 
     /* 댓글 부분 */
     @Override

@@ -22,5 +22,15 @@ public class UsersServiceImpl implements UsersService{
         return usersDAO.insert(user);
     }
 
+    @Override
+    public int checkId(String id) {
+        return usersDAO.selectCheckId(id);
+    }
+
+    @Override
+    public int checkName(String name) {
+        return usersDAO.selectCheckName(name);
+    }
+
 
 } // UsersServiceImpl end

@@ -35,6 +35,11 @@ public class BoardController {
         boardService.insertPost(board);
         return "redirect:/";
     }
+    @RequestMapping(value = "/post/{no}", method = RequestMethod.PUT)
+    public String postRemove(@PathVariable int no) {
+        boardService.removePost(no);
+        return "redirect:/";
+    }
 
     @RequestMapping(value = "/ajax/post/comment", method = RequestMethod.POST)
     @ResponseBody

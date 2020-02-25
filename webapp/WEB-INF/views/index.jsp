@@ -8,7 +8,7 @@
     <link rel="shortcut icon" href="/eager/images/favicon/favicon.ico" type="image/x-icon">
 </head>
 <style>
-    html, body {
+    html, body, p {
         padding: 0; margin: 0;
     }
     ul, dl, dd, li{
@@ -72,6 +72,45 @@
         border-bottom: 1px solid #424242;
     }
 
+    .contents dl {
+        padding: 30px 10px;
+        overflow: hidden;
+        margin: 0;
+    }
+
+    .post {
+        float: left;
+        margin: 0;
+    }
+
+    .post.writer-box {
+        width: 160px; height: 85px;
+    }
+
+
+    .post.post-box {
+        width: 60%; height: 80px;
+        margin-left: 20px;
+        padding-left: 10px;
+    }
+
+    .writer-name {
+        font-size: 15px;
+    }
+
+    .write-date {
+        color: #333;
+        font-size: 16px;
+        margin-top: 15px;
+        color: #333;
+    }
+
+
+    .post-title {
+        font-size: 25px;
+        font-weight: bold;
+    }
+
     .hidden {
         display: none;
         overflow: hidden;
@@ -100,14 +139,16 @@
                     <a href="/eager/post/<@=post.idx@>">
                         <dl>
                             <dt class="hidden">작성유저</dt>
-                            <dd>
-                                <p><@=post.name@></p>
-                                <p><@=post.regdate @></p>
+                            <dd class="post writer-box">
+                                <p class="writer-name"><@=post.name@></p>
+                                <p class="write-date"><@=moment(post.regdate).startOf('hour').fromNow() @></p>
                             </dd>
                             <dt class="hidden">작성글</dt>
-                            <dd>
-                                <p><@=post.title@></p>
+                            <dd class="post post-box">
+                                <p class="post-title"><@=post.title@></p>
                             </dd>
+                            <dt class="hidden">그림상자</dt>
+                            <dd class="post image-box hidden"></dd>
                         </dl>
                     </a>
                 </li>
@@ -124,6 +165,8 @@
 <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
 <script src="/eager/js/underscore-min.js"></script>
 <script src="/eager/js/board_login_js.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.0/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.0/locale/ko.js"></script>
 <script>
     let $contentContainer = $('.contents-container');
 
